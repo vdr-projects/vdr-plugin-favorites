@@ -1,5 +1,9 @@
 History
 -------
+2021-01-30 Version 0.0.3
+- Update Makefile to new standard
+- Add compatibility for VDR >= 2.3.1
+
 2011-12-10 Version 0.0.2
 - hide main menu entry is now working
 

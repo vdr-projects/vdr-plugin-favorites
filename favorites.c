@@ -15,7 +15,7 @@
 extern cFavoriteChannels FavoriteChannelsList;
 extern cFavoriteChannels FavoriteChannelsListDisplay;
 
-static const char *VERSION        = "0.0.2";
+static const char *VERSION        = "0.0.3";
 static const char *DESCRIPTION    = trNOOP("Favorite Channels Menu");
 static const char *MAINMENUENTRY  = trNOOP("Favorites");
 
