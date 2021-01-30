@@ -1,0 +1,56 @@
+# VDR language source file.
+# Copyright (C) 2008 Klaus Schmidinger <kls@tvdr.de>
+# This file is distributed under the same license as the VDR package.
+# Klaus Schmidinger <kls@tvdr.de>, 2000-2008
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: VDR 1.7.18\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2011-06-12 19:28+0200\n"
+"PO-Revision-Date: 2010-01-16 16:46+0100\n"
+"Last-Translator: gnapheus\n"
+"Language-Team: German <vdr@linuxtv.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+
+msgid "Favorite Channels"
+msgstr "Lieblingskanäle"
+
+msgid "Button$Remove"
+msgstr "Löschen"
+
+msgid "Button$Add"
+msgstr "Hinzufügen"
+
+msgid "Button$Up"
+msgstr "Hoch"
+
+msgid "Button$Down"
+msgstr "Runter"
+
+msgid "Favorite Channels Menu"
+msgstr "Lieblingskänale Menü"
+
+msgid "Favorites"
+msgstr "Favoriten"
+
+msgid "as entered"
+msgstr "wie eingegeben"
+
+msgid "none"
+msgstr "nichts"
+
+msgid "name"
+msgstr "Name"
+
+msgid "Hide main menu entry"
+msgstr "Hauptmenüeintrag verstecken"
+
+msgid "Close on switch"
+msgstr "Beim Umschalten schließen"
+
+msgid "Sort by"
+msgstr "Sortiert nach"
