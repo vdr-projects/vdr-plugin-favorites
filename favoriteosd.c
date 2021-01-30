@@ -40,7 +40,8 @@ void cFavoriteOsd::Show()
    ReadFavoriteChannels();
 
    // find the actual current
-   cChannel *Channel = Channels.GetByNumber(cDevice::PrimaryDevice()->CurrentChannel());
+   LOCK_CHANNELS_READ;
+   const  cChannel *Channel = Channels->GetByNumber(cDevice::PrimaryDevice()->CurrentChannel());
    if (Channel)
    {
       tChannelID myCurrent = Channel->GetChannelID();
@@ -62,9 +63,10 @@ void cFavoriteOsd::DisplayFavorites()
    Clear();
    for (int i=0; i<number; i++)
    {
-      if (Channels.GetByChannelID(favoritechannels[i]))
+      LOCK_CHANNELS_READ;
+      if (Channels->GetByChannelID(favoritechannels[i]))
       {
-         Add (new cOsdItem((Channels.GetByChannelID(favoritechannels[i]))->Name()));
+         Add (new cOsdItem((Channels->GetByChannelID(favoritechannels[i]))->Name()));
       }
    }
    Display();
@@ -168,7 +170,8 @@ void cFavoriteOsd::CursorOK()
     * If current channel is a favoritered one we remember it as the lastChannel
     */
    lastChannel = FavoriteChannelsList.GetCurrentFavorite();
-   cChannel *Channel =  Channels.GetByChannelID(favoritechannels[current]);
+   LOCK_CHANNELS_READ;
+   const cChannel *Channel = Channels->GetByChannelID(favoritechannels[current]);
    if (Channel)
       cDevice::PrimaryDevice()->SwitchChannel(Channel, true);
 }
@@ -199,7 +202,8 @@ void cFavoriteOsd::AddChannel()
 {
    if (number < CHANNELSMAX)
    {
-      cChannel *Channel = Channels.GetByNumber(cDevice::PrimaryDevice()->CurrentChannel());
+      LOCK_CHANNELS_READ;
+      const cChannel *Channel = Channels->GetByNumber(cDevice::PrimaryDevice()->CurrentChannel());
       if (Channel)
       {
          tChannelID Current_channel = Channel->GetChannelID();

@@ -37,8 +37,8 @@ bool cFavoriteChannel::Save(FILE *f)
 {
    /* Fix crash problem reported by Manuel Hartl    */
    /* when loading a non existing favoriteed channel  */
-   cChannel *channel;
-   channel = Channels.GetByChannelID(GetIndex(), true);
+  LOCK_CHANNELS_READ;
+  const cChannel* channel = Channels->GetByChannelID(GetIndex(), true);
    if (!channel)
    {
       isyslog("Favorite channel '%s' does not exist anymore. Removing\n", *(Index.ToString()) );
@@ -64,17 +64,18 @@ int cFavoriteChannel::Compare(const cListObject &ListObject) const
    else if (config.sortby == 2)
    {
       /* Sort by same order as channels.conf */
-      if (strcmp(Channels.GetByChannelID(l->Index)->Name(), Channels.GetByChannelID(Index)->Name()) == 0)
+      LOCK_CHANNELS_READ;
+      if (strcmp(Channels->GetByChannelID(l->Index)->Name(), Channels->GetByChannelID(Index)->Name()) == 0)
          return 0;
-      for (cChannel *channel = Channels.First(); channel; channel = Channels.Next(channel))
+      for (const cChannel *channel = Channels->First(); channel; channel = Channels->Next(channel))
       {
          if (!channel->GroupSep() || *channel->Name())
          {
-            if (!strcmp(channel->Name(), Channels.GetByChannelID(l->Index)->Name()))
+            if (!strcmp(channel->Name(), Channels->GetByChannelID(l->Index)->Name()))
             {
                return 1;
             }
-            else if (!strcmp(channel->Name(), Channels.GetByChannelID(Index)->Name()))
+            else if (!strcmp(channel->Name(), Channels->GetByChannelID(Index)->Name()))
             {
                return -1;
             }
@@ -86,7 +87,8 @@ int cFavoriteChannel::Compare(const cListObject &ListObject) const
    else if (config.sortby == 3)
    {
       /* Sort by channel name */
-      return strcasecmp( Channels.GetByChannelID(l->Index)->Name(), Channels.GetByChannelID(Index)->Name())*-1;
+      LOCK_CHANNELS_READ;
+      return strcasecmp( Channels->GetByChannelID(l->Index)->Name(), Channels->GetByChannelID(Index)->Name())*-1;
    }
    else
    {
@@ -155,7 +157,8 @@ void cFavoriteChannels::RemoveFavoriteChannel(tChannelID removenumber)
 
 tChannelID cFavoriteChannels::GetCurrentFavorite()
 {
-   cChannel *Channel = Channels.GetByNumber(cDevice::PrimaryDevice()->CurrentChannel());
+   LOCK_CHANNELS_READ;
+   const cChannel *Channel = Channels->GetByNumber(cDevice::PrimaryDevice()->CurrentChannel());
    if (Channel)
    {
       tChannelID current_channel = Channel->GetChannelID();
