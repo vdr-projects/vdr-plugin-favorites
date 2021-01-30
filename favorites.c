@@ -15,7 +15,7 @@
 extern cFavoriteChannels FavoriteChannelsList;
 extern cFavoriteChannels FavoriteChannelsListDisplay;
 
-static const char *VERSION        = "0.0.1";
+static const char *VERSION        = "0.0.2";
 static const char *DESCRIPTION    = trNOOP("Favorite Channels Menu");
 static const char *MAINMENUENTRY  = trNOOP("Favorites");
 
@@ -32,7 +32,7 @@ class cPluginFavorites : public cPlugin
       virtual bool ProcessArgs(int argc, char *argv[]);
       virtual bool Start(void);
       virtual void Housekeeping(void);
-      virtual const char *MainMenuEntry(void) { return tr(MAINMENUENTRY); }
+      virtual const char *MainMenuEntry(void) { return config.hidemainmenuentry ? NULL : tr(MAINMENUENTRY); }
       virtual cOsdObject *MainMenuAction(void);
       virtual cMenuSetupPage *SetupMenu(void);
       virtual bool SetupParse(const char *Name, const char *Value);
@@ -45,6 +45,7 @@ cPluginFavorites::cPluginFavorites(void)
    // VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
    config.closeonswitch=1;
    config.sortby=1;
+   config.hidemainmenuentry=0;
 }
 
 
@@ -114,8 +115,9 @@ cMenuSetupPage *cPluginFavorites::SetupMenu(void)
 bool cPluginFavorites::SetupParse(const char *Name, const char *Value)
 {
    // Parse your own setup parameters and store their values.
-   if (!strcasecmp(Name, "CloseOnSwitch"))         config.closeonswitch = atoi(Value);
-   else if (!strcasecmp(Name, "SortBy"))           config.sortby = atoi(Value);
+   if (!strcasecmp(Name, "CloseOnSwitch"))          config.closeonswitch = atoi(Value);
+   else if (!strcasecmp(Name, "SortBy"))            config.sortby = atoi(Value);
+   else if (!strcasecmp(Name, "HideMainMenuEntry")) config.hidemainmenuentry = atoi(Value);
    else
       return false;
 

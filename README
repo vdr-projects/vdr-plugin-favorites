@@ -7,13 +7,18 @@ Maxime GUILBOT, Olivier JACQUES and an Anonymous Italian :)
 
 Project's homepage:          
 
-
-See the file COPYING for license information.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+See the file COPYING for more information.
 
 Description:
 -----------
 Favorites is a plugin that implements a favorite channels menu.
-It makes it easy to recall (switch to) your favorite channels.
+In contrast to the prefermenu plugin favorites uses the vdr menu
+functions, which is why it is skin enabled.
+
 
 Installation:
 ------------
@@ -27,14 +32,13 @@ Installation:
   Yellow    @favorites
   ---- sample keymacros.conf ----
   
-  Please check VDR manual (man 5 vdr) for more informations on keymacros.conf
+Please check VDR manual (man 5 vdr) for more informations on keymacros.conf
 
 Customization:
 -------------
-The Favorites plugin can be tuned to your own preferences.
 Go in Configuration/Plugins/Favorites/ to access the setup menu.
 
-Sort by                 : Way to sort channels in the menu.
+Sort by                 : How to sort channels in the menu.
                            - "None": same order as channels.conf
                            - "Name": sort by alphabetic order
 Close on switch         : Close the menu when switching to a channel.
@@ -42,8 +46,15 @@ Close on switch         : Close the menu when switching to a channel.
 
 Usage:
 -----
-Add a favorite channel by pressing Green button.
-Remove a prefered channel by pressing Red button.
+
+up/down	 Select the favorite channel.
+ok	 Switch to the selected favorite channel.
+red	 Remove selected favorite channel from list.
+green	 Add current chennel to favorite channel list.
+Yellow	 Move selected favorite channel up in the list.
+Blue	 Move selected favorite channel down in the list.
+back	 close the plugin
+
 
 Files:
 -----
