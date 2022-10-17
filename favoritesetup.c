@@ -14,12 +14,14 @@ cFavoriteSetup::cFavoriteSetup(void)
    CloseOnSwitch = config.closeonswitch;
    SortBy      = config.sortby;
    HideMainMenuEntry=config.hidemainmenuentry;
+   ShowEPG = config.showepg;
    SortOpt[0] = tr("as entered");
    SortOpt[1] = tr("none");
    SortOpt[2] = tr("name");
    Add(new cMenuEditBoolItem(tr("Hide main menu entry"), &HideMainMenuEntry));
    Add(new cMenuEditBoolItem(tr("Close on switch"), &CloseOnSwitch));
    Add(new cMenuEditStraItem(tr("Sort by"), &SortBy, 3, SortOpt));
+   Add(new cMenuEditBoolItem(tr("Show EPG"), &ShowEPG));
 }
 
 
@@ -28,4 +30,5 @@ void cFavoriteSetup::Store(void)
    SetupStore("CloseOnSwitch", config.closeonswitch = CloseOnSwitch);
    SetupStore("SortBy", config.sortby = SortBy);
    SetupStore("HideMainMenuEntry", config.hidemainmenuentry = HideMainMenuEntry);
+   SetupStore("ShowEPG", config.showepg = ShowEPG);
 }

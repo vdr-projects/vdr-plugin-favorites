@@ -10,6 +10,8 @@ class cFavoriteSetup : public cMenuSetupPage
       int HideMainMenuEntry;
       int CloseOnSwitch;
       int SortBy;
+      int ShowEPG;
+
    protected:
       virtual void Store(void);
    public:

@@ -6,6 +6,7 @@ struct sFavoriteConfig
    int closeonswitch;
    int sortby;
    int hidemainmenuentry;
+   int showepg;
 };
 
 extern sFavoriteConfig config;

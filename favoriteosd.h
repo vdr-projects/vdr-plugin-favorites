@@ -8,6 +8,7 @@ class cFavoriteOsd : public cOsdMenu
 {
    private:
       tChannelID lastChannel;
+      void AddMenuEntry(int favId);
 
    public:
       cFavoriteOsd(void);
@@ -24,6 +25,8 @@ class cFavoriteOsd : public cOsdMenu
 
    private:
       int current;
+      bool now;
 
 };
+
 #endif                           //__FAVORITEOSD_H
