@@ -20,6 +20,30 @@
     ((EVENT) && !isempty((EVENT)->ShortText())) ? " ~ ":"", \
 ((EVENT) && !isempty((EVENT)->ShortText())) ? (EVENT)->ShortText():""
 
+// --- Icons ------------------------------------------------------------------
+bool Icons::IsUTF8 = false;
+
+void Icons::InitCharSet()
+{
+    // Taken from VDR's vdr.c
+    char *CodeSet = NULL;
+    if(setlocale(LC_CTYPE, ""))
+        CodeSet = nl_langinfo(CODESET);
+    else
+    {
+        char *LangEnv = getenv("LANG"); // last resort in case locale stuff isn't installed
+        if(LangEnv)
+        {
+            CodeSet = strchr(LangEnv,'.');
+            if( CodeSet )
+                CodeSet++; // skip the dot
+        }
+    }
+
+    if( CodeSet && strcasestr(CodeSet,"UTF-8") != 0 )
+        IsUTF8 = true;
+}
+
 extern int number;
 extern tChannelID favoritechannels[CHANNELSMAX];
 
@@ -71,7 +95,7 @@ void cFavoriteOsd::DisplayFavorites()
 {
    Clear();
 
-   SetCols( 10, 6, 6, 4);
+   SetCols(15, 5, 5, 4);
 
    for (int i=0; i<number; i++)
    {
@@ -103,10 +127,12 @@ void cFavoriteOsd::DisplayFavorites()
 void cFavoriteOsd::AddMenuEntry(int favId) {
     const cEvent *event = NULL;
     const cTimer* hasMatch = NULL;
-    eTimerMatch timerMatch;
-    int progress = 1;
+    eTimerMatch timerMatch = tmNone;
 
-    // Timers, Channels, Recordings, Schedules
+    char t = ' ';
+    char v = ' ';
+    char r = ' ';
+    char szEventDescr[100] = "";
 
     LOCK_TIMERS_READ;
     LOCK_CHANNELS_READ;
@@ -130,40 +156,66 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
         }
 
         char szChannelpart[20] = "";
-        if (channel) {
-            snprintf(szChannelpart, 20, "%s\t", channel->Name());
-        }
+        snprintf(szChannelpart, 20, "%s\t", channel->Name());
 
         char szProgressPart[50] = "";
-        strcpy(szProgressPart, "\t");
+        if (event) {
+            strcpy(szProgressPart, "\t");
 
-        char szProgress[9] = "";
-        int frac = (int)roundf( (float)(time(NULL) - event->StartTime()) / (float)(event->Duration()) * 8.0 );
-        frac = min(8,max(0, frac));
+            int fracInt;
+            float fracFloat;
+            std::string ProgressBar;
+            char szProgress[9] = "";
 
-        for(int i = 0; i < frac; i++)
-            szProgress[i] = (progress == 1 ? '|' : 127);
-        szProgress[frac]=0;
-        sprintf(szProgressPart, "%c%-8s%c\t", progress==1?'[':128, szProgress, progress==1?']':129);
+            switch (config.progressview) {
+                case 1: // VDRSymbols
+                    ProgressBar += Icons::ProgressStart();
+                    fracInt = (int) roundf((float) (time(NULL) - event->StartTime()) / (float) (event->Duration()) * 10.0);
+                    fracInt = min(10, max(0, fracInt));
+                    for (int i = 0; i < 10; i++) {
+                        if (i < fracInt)
+                            ProgressBar += Icons::ProgressFilled();
+                        else
+                            ProgressBar += Icons::ProgressEmpty();
+                    }
+                    ProgressBar += Icons::ProgressEnd();
+                    sprintf(szProgressPart, "%s\t", ProgressBar.c_str());
+                    break;
 
-        char t = event && hasMatch ? (timerMatch == tmFull) ? 'T' : 't' : ' ';
+                case 0:
+                    fracInt = (int) roundf((float) (time(NULL) - event->StartTime()) / (float) (event->Duration()) * 8.0);
+                    fracInt = min(8, max(0, fracInt));
 
-        char szEventDescr[100] = "";
-        snprintf(szEventDescr, 100, "%s%s%s",
-                 event?event->Title():tr("no info"),
-                 SHORTTEXT(event) );
+                    for (int i = 0; i < fracInt; i++)
+                        szProgress[i] = '|';
+                    szProgress[fracInt] = 0;
+                    sprintf(szProgressPart, "%c%-8s%c\t", '[', szProgress, ']');
+                    break;
+
+                default:
+                    fracFloat = (int) roundf(
+                            (float) (time(NULL) - event->StartTime()) / (float) (event->Duration()) * 100.0);
+                    sprintf(szProgressPart, "%3.0f%%", fracFloat);
+            }
+
+            t = hasMatch ? ((timerMatch == tmFull) ? 'T' : 't') : ' ';
+            v = event->Vps() && (event->Vps() - event->StartTime()) ? 'V' : ' ';
+            r = event->IsRunning() ? '*' : ' ';
+
+            snprintf(szEventDescr, 100, "%s%s%s",
+                     event ? event->Title() : tr("no info"),
+                     SHORTTEXT(event));
+        }
 
         char *buffer = NULL;
-        if (channel) {
-            asprintf(&buffer, "%s%s\t%s %c \t%s",
-                     szChannelpart,
-                     event ? *(event->GetTimeString()) : "",
-                     szProgressPart,
-                     t,
-                     szEventDescr);
+        asprintf(&buffer, "%s%s\t%s %c%c%c \t%s",
+                 szChannelpart,
+                 event?*(event->GetTimeString() ):"",
+                 szProgressPart,
+                 t, v, r,
+                 szEventDescr);
 
-            Add (new cOsdItem(buffer));
-        }
+        Add (new cOsdItem(buffer));
     }
 }
 

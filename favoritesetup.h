@@ -7,10 +7,12 @@ class cFavoriteSetup : public cMenuSetupPage
 {
    private:
       const char *SortOpt[3];
+      const char* ProgressViewtStrs[3];
       int HideMainMenuEntry;
       int CloseOnSwitch;
       int SortBy;
       int ShowEPG;
+      int ProgressView;
 
    protected:
       virtual void Store(void);
