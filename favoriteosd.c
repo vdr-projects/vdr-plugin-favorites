@@ -95,7 +95,7 @@ void cFavoriteOsd::DisplayFavorites()
 {
    Clear();
 
-   SetCols(15, 5, 5, 4);
+   SetCols(17, 5, 5, 4);
 
    for (int i=0; i<number; i++)
    {
@@ -156,7 +156,7 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
         }
 
         char szChannelpart[20] = "";
-        snprintf(szChannelpart, 20, "%s\t", channel->Name());
+        snprintf(szChannelpart, 20, "%s", channel->Name());
 
         char szProgressPart[50] = "";
         if (event) {
@@ -208,7 +208,7 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
         }
 
         char *buffer = NULL;
-        asprintf(&buffer, "%s%s\t%s %c%c%c \t%s",
+        asprintf(&buffer, "%s\t%s\t%s %c%c%c \t%s",
                  szChannelpart,
                  event?*(event->GetTimeString() ):"",
                  szProgressPart,
