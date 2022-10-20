@@ -215,7 +215,6 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
                      t, v, r,
                      event ? szEventDescr : " ");
 
-        printf("%s\n", buffer);
         Add (new cOsdItem(buffer));
     }
 }
