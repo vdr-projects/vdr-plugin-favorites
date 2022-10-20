@@ -95,7 +95,7 @@ void cFavoriteOsd::DisplayFavorites()
 {
    Clear();
 
-   SetCols(17, 5, 5, 4);
+   SetCols(17, 5, 10, 4);
 
    for (int i=0; i<number; i++)
    {
@@ -132,7 +132,7 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
     char t = ' ';
     char v = ' ';
     char r = ' ';
-    char szEventDescr[100] = "";
+    char szEventDescr[100] = " ";
 
     LOCK_TIMERS_READ;
     LOCK_CHANNELS_READ;
@@ -179,7 +179,7 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
                             ProgressBar += Icons::ProgressEmpty();
                     }
                     ProgressBar += Icons::ProgressEnd();
-                    sprintf(szProgressPart, "%s\t", ProgressBar.c_str());
+                    sprintf(szProgressPart, "%s", ProgressBar.c_str());
                     break;
 
                 case 0:
@@ -189,7 +189,7 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
                     for (int i = 0; i < fracInt; i++)
                         szProgress[i] = '|';
                     szProgress[fracInt] = 0;
-                    sprintf(szProgressPart, "%c%-8s%c\t", '[', szProgress, ']');
+                    sprintf(szProgressPart, "%c%-8s%c", '[', szProgress, ']');
                     break;
 
                 default:
@@ -208,13 +208,14 @@ void cFavoriteOsd::AddMenuEntry(int favId) {
         }
 
         char *buffer = NULL;
-        asprintf(&buffer, "%s\t%s\t%s %c%c%c \t%s",
-                 szChannelpart,
-                 event?*(event->GetTimeString() ):"",
-                 szProgressPart,
-                 t, v, r,
-                 szEventDescr);
+            asprintf(&buffer, "%s\t%s\t%s\t %c%c%c \t%s",
+                     szChannelpart,
+                     event ? *(event->GetTimeString()) : "    ",
+                     event ? szProgressPart : "          ",
+                     t, v, r,
+                     event ? szEventDescr : " ");
 
+        printf("%s\n", buffer);
         Add (new cOsdItem(buffer));
     }
 }
