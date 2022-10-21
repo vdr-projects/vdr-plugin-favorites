@@ -53,6 +53,7 @@ red	 Remove selected favorite channel from list.
 green	 Add current chennel to favorite channel list.
 Yellow	 Move selected favorite channel up in the list.
 Blue	 Move selected favorite channel down in the list.
+8        Show next event
 back	 close the plugin
 
 
@@ -60,6 +61,3 @@ Files:
 -----
 Favorite Channel List is in favorites.conf
 Configuration settings are stored in VDR's setup.conf
-
-
-

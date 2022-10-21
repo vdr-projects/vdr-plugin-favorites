@@ -73,6 +73,7 @@ bool cPluginFavorites::Start(void)
 {
    // Start any background activities the plugin shall perform.
    // Default values for setup
+   Icons::InitCharSet();
    return true;
 }
 
@@ -118,6 +119,8 @@ bool cPluginFavorites::SetupParse(const char *Name, const char *Value)
    if (!strcasecmp(Name, "CloseOnSwitch"))          config.closeonswitch = atoi(Value);
    else if (!strcasecmp(Name, "SortBy"))            config.sortby = atoi(Value);
    else if (!strcasecmp(Name, "HideMainMenuEntry")) config.hidemainmenuentry = atoi(Value);
+   else if (!strcasecmp(Name, "ShowEPG"))           config.showepg = atoi(Value);
+   else if (!strcasecmp(Name, "ProgressView"))      config.progressview = atoi(Value);
    else
       return false;
 
@@ -127,5 +130,5 @@ bool cPluginFavorites::SetupParse(const char *Name, const char *Value)
 
 sFavoriteConfig config;
 
-                                 // Don't touch this!
+// Don't touch this!
 VDRPLUGINCREATOR(cPluginFavorites);

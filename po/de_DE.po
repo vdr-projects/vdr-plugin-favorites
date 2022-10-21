@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.7.18\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2011-12-07 16:35+0100\n"
+"POT-Creation-Date: 2022-10-18 13:55+0200\n"
 "PO-Revision-Date: 2010-01-16 16:46+0100\n"
 "Last-Translator: gnapheus\n"
 "Language-Team: German <vdr@linuxtv.org>\n"
@@ -31,6 +31,9 @@ msgstr "Hoch"
 msgid "Button$Down"
 msgstr "Runter"
 
+msgid "no info"
+msgstr "Keine Daten vorhanden"
+
 msgid "Favorite Channels Menu"
 msgstr "Lieblingskänale Menü"
 
@@ -46,6 +49,15 @@ msgstr "nichts"
 msgid "name"
 msgstr "Name"
 
+msgid "old text bar"
+msgstr "Text Balken"
+
+msgid "VDRSymbols"
+msgstr "VDRSymbols"
+
+msgid "Percent"
+msgstr "Prozent"
+
 msgid "Hide main menu entry"
 msgstr "Hauptmenüeintrag verstecken"
 
@@ -54,3 +66,9 @@ msgstr "Beim Umschalten schließen"
 
 msgid "Sort by"
 msgstr "Sortiert nach"
+
+msgid "Show EPG"
+msgstr "Zeige Sendungsinformationen"
+
+msgid "Progress view"
+msgstr "Fortschrittsanzeige"
