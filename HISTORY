@@ -1,5 +1,8 @@
 History
 -------
+2022-10-21 Version 0.0.4
+- Add additional information, similar to zaphistory. Thanks to @Zabrimus.
+
 2021-01-30 Version 0.0.3
 - Update Makefile to new standard
 - Add compatibility for VDR >= 2.3.1
